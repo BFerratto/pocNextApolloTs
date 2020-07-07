@@ -1,34 +1,40 @@
-import Link from 'next/link'
-import { useViewerQuery, ViewerDocument } from '../lib/viewer.graphql'
-import { initializeApollo } from '../lib/apollo'
+import Link from "next/link";
+import { useViewerQuery, ViewerDocument } from "../lib/viewer.graphql";
+import { initializeApollo } from "../lib/apollo";
 
 const Index = () => {
-  const { data } = useViewerQuery()
-  const { viewer } = data!
+  const { data } = useViewerQuery();
+  const { viewer } = data!;
 
   return (
     <div>
-      You're signed in as {viewer.name} and you're {viewer.status} go to the{' '}
-      <Link href="/about">
-        <a>about</a>
-      </Link>{' '}
-      page.
+      <h1>This is your 1on1 helper!</h1>
+      <h3>Your goals:</h3>
+      <p>Goal name: {viewer.name}. </p>
+      <p>The status of this goal is: {viewer.status}.</p>
+      <p>
+        Check{" "}
+        <Link href="/about">
+          <a>goal details</a>
+        </Link>{" "}
+        here.
+      </p>
     </div>
-  )
-}
+  );
+};
 
 export async function getStaticProps() {
-  const apolloClient = initializeApollo()
+  const apolloClient = initializeApollo();
 
   await apolloClient.query({
     query: ViewerDocument,
-  })
+  });
 
   return {
     props: {
       initialApolloState: apolloClient.cache.extract(),
     },
-  }
+  };
 }
 
-export default Index
+export default Index;
