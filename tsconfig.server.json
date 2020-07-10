@@ -3,6 +3,7 @@
   "compilerOptions": {
     "module": "commonjs",
     "isolatedModules": false,
+    "outDir": "dist",
     "noEmit": false,
     "emitDecoratorMetadata": true
   }

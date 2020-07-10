@@ -1,5 +1,4 @@
 import { resolve } from "path";
-
 module.exports = {
   type: "postgres",
   host: "localhost",
@@ -7,11 +6,11 @@ module.exports = {
   username: "postgres",
   password: "example",
   database: "one_on_one",
-  synchronize: true,
+  synchronize: false,
   logging: false,
-  entities: [resolve(__dirname, "src/entity/*.ts")],
-  migrations: [resolve(__dirname, "src/migration/*.ts")],
-  subscribers: [resolve(__dirname, "src/subscriber/*.ts")],
+  entities: [resolve(__dirname, "src/entity/*{.ts,.js}")],
+  migrations: [resolve(__dirname, "src/migration/*{.ts,.js}")],
+  subscribers: [resolve(__dirname, "src/subscriber/*{.ts,.js}")],
   cli: {
     entitiesDir: "src/entity",
     migrationsDir: "src/migration",

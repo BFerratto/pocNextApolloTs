@@ -1,17 +1,19 @@
 import Link from "next/link";
-import { useViewerQuery, ViewerDocument } from "../lib/viewer.graphql";
-import { initializeApollo } from "../lib/apollo";
+import { initializeApollo, useApollo } from "../lib/apollo";
+import gql from "graphql-tag";
+import { ensureConnection } from "../src/ensureConnection";
 
-const Index = () => {
-  const { data } = useViewerQuery();
-  const { viewer } = data!;
+const Index = ({ initialApolloState }: any) => {
+  const store = useApollo(initialApolloState);
+  console.log({ store });
+  // const { data } = useViewerQuery();
+  // const { viewer } = data!;
 
   return (
     <div>
       <h1>This is your 1on1 helper!</h1>
       <h3>Your goals:</h3>
-      <p>Goal name: {viewer.name}. </p>
-      <p>The status of this goal is: {viewer.status}.</p>
+
       <p>
         Check{" "}
         <Link href="/about">
@@ -23,11 +25,19 @@ const Index = () => {
   );
 };
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
+  await ensureConnection("ssr");
   const apolloClient = initializeApollo();
 
   await apolloClient.query({
-    query: ViewerDocument,
+    query: gql`
+      query {
+        account {
+          id
+          email
+        }
+      }
+    `,
   });
 
   return {

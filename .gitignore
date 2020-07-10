@@ -33,3 +33,5 @@ yarn-error.log*
 # Graphql
 *.graphql.d.ts
 *.graphqls.d.ts
+
+/dist
