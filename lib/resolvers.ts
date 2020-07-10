@@ -1,10 +1,9 @@
-import { QueryResolvers } from "./type-defs.graphqls";
-import { ResolverContext } from "./apollo";
+import { getAccounts } from "../src/services/account";
 
-const Query: Required<QueryResolvers<ResolverContext>> = {
-  viewer(_parent, _args, _context, _info) {
-    return { id: String(1), name: "Make 1on1 helper", status: "started" };
+export const resolvers = {
+  Query: {
+    account() {
+      return getAccounts();
+    },
   },
 };
-
-export default { Query };
